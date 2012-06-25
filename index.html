@@ -1,0 +1,24 @@
+<!DOCTYPE HTML>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>AutoIE</title>
+    <script src="js/storage.js"></script>
+	<script src="js/default_settings.js"></script>
+    <script>
+	window.addEventListener("load", setupConnection, false);
+
+	function setupConnection(){
+		opera.extension.onconnect = function(event){
+			event.source.postMessage(widget.preferences.transform);
+		}
+
+		opera.extension.onmessage = function(event){
+			//console.log(event.data);
+	   }
+	}
+	
+	storage.init();
+    </script>
+</head>
+<body>

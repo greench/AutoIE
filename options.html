@@ -1,0 +1,95 @@
+<!doctype html>
+<html>
+<head>
+	<title>AutoIE Preferences</title>
+	<meta charset="utf-8">
+	<link rel="stylesheet" href="css/options.css">
+	<script src="js/storage.js"></script>
+	<script src="js/options_page.js"></script>
+	<script src="js/default_settings.js"></script>
+	<script>
+		// Include storage.js and options_page.js, then create a SettingStorage
+		// object and call OptionsPage.init() with it as the only argument
+		OptionsPage.init(storage);
+	</script>
+</head>
+<body>
+<div id="viewport">
+	<div id="topbar"></div>
+	<div id="content">
+		<header>
+			<h1>AutoIE Preferences</h1>
+		</header>
+
+		<fieldset>
+			<h3>Web Site List</h3>
+			
+			
+			<!-- By adding the "data-resets" attribute to a <button> or any clickable element,
+				you can create a button that resets a setting to its default value. -->
+			<p>
+				<label for="transform">to add another web site, please give a line break</label> <br>
+				<textarea name="transform" id="transform" rows="6" cols="50" 
+								data-loadfunc="joinLines" data-savefunc="splitLines"></textarea>
+			</p>
+
+			
+		</fieldset>
+
+
+		<footer>
+			<p>
+				AutoIE by <a href="http://zettlina.com" title="My Personal Page">Çağlar Yeşilyurt</a>.
+			</p>
+			<p>
+				<a href="https://github.com/ChaosinaCan/OperaExtOptions">OperaExtOptions.js</a>, an open-source library by Joel Spadin.
+			</p>
+		</footer>
+	</div><!-- #content -->
+
+	<!-- This script showcases some of the more advanced features. For most 
+		options pages, you can safely ignore anything in this script -->
+	<script>
+		// Filter functions
+		function splitLines(data) {
+			if (!data)
+				data = '';
+			return data.replace("\r\n", "\n").split("\n").map(function(item) { return item.trim() });
+		}
+
+		function joinLines(data) {
+			if (!data)
+				data = [];
+			return data.map(function(item) { return item.trim() }).join("\n");
+		}
+
+		function scrollToElement(element) {
+			var y = 0;
+			while(element != null){
+				y += element.offsetTop;
+				element = element.offsetParent;
+			}
+			window.scrollTo(0, y);
+		}
+
+
+		// Debug code. Press ~ to show all objects stored in the web storage
+		// object used or update the list. Press Shift+~ to hide the list;
+		addEventListener('keypress', function(e) {
+			// List storage
+			if (e.keyCode == 96) {
+				var container = document.getElementById('storage_list');
+				container.innerHTML = '';
+				container.appendChild(OptionsPage.debugStorage());
+				scrollToElement(container);
+			}
+			// Hide storage
+			else if (e.keyCode == 126) {
+				document.getElementById('storage_list').innerHTML = '';
+			}
+		}, false);
+	</script>
+</div><!-- #viewport -->
+
+</body>
+</html>
